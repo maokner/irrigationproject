@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 from moisture_sensor import get_moisture_level
+from waterPlant import water_plant
 import threading
 import time
 
@@ -74,6 +75,7 @@ def monitor_table():
         if table["water_plant"] == 1:
             # Print the watering message and set the status to show it has watered
             print(f"Watering plant with {table['amount']} ml")
+            water_plant(int(table["amount"]))
             table["watering_status"] = f"Watered with ({table['amount']}) ml at {now.strftime('%H:%M:%S')}"
             table["water_plant"] = 0
 
