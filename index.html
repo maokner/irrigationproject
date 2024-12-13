@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Moisture Monitoring System</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        // Function to fetch updated data from the server
+        function fetchCurrentData() {
+            fetch('/table-data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('moisture_level').innerText = data.moisture_level;
+                    document.getElementById('next_check_time').innerText = data.next_check_time;
+                    document.getElementById('amount').innerText = data.amount;
+                    document.getElementById('watering_status').innerText = data.watering_status;
+                });
+        }
+
+        // Automatically refresh the data every 5 seconds
+        setInterval(fetchCurrentData, 5000);
+    </script>
+</head>
+<body>
+    <h1>Soil Moisture Monitoring System</h1>
+
+    <div>
+        <h3>Current Moisture Level (%):</h3>
+        <p id="moisture_level">{{ moisture_level }}</p>
+    </div>
+
+    <div>
+        <h3>Next Check Time:</h3>
+        <p id="next_check_time">{{ next_check_time }}</p>
+    </div>
+
+    <div>
+        <h3>Amount:</h3>
+        <p id="amount">{{ amount }}</p>
+    </div>
+
+    <div>
+        <h3>Watering Status:</h3>
+        <p id="watering_status">No watering yet</p>
+    </div>
+
+    <form method="POST" action="/update-table">
+        <button type="submit" name="action" value="check_moisture">Check Moisture Level</button>
+        <button type="submit" name="action" value="water_plant">Water Plant</button>
+        <label for="water-amount">Water Amount:</label>
+        <input type="text" id="water-amount" name="amount" placeholder="Enter water amount">
+        <button type="submit" name="action" value="update_amount">Update Amount</button>
+    </form>
+
+    <a href="/table">View Detailed Table</a>
+</body>
+</html>

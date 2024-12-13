@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Table</title>
+    <script>
+        // Function to fetch updated table data from the server
+        function fetchTableData() {
+            fetch('/table-data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('moisture_level').innerText = data.moisture_level;
+                    document.getElementById('next_check_time').innerText = data.next_check_time;
+                    document.getElementById('amount').innerText = data.amount;
+                    document.getElementById('check_moisture').innerText = data.check_moisture;
+                    document.getElementById('water_plant').innerText = data.water_plant;
+                });
+        }
+
+        // Automatically refresh the data every 5 seconds
+        setInterval(fetchTableData, 5000);
+    </script>
+</head>
+<body>
+    <h1>Soil Moisture Monitoring - Control Table</h1>
+    <table border="1">
+        <tr>
+            <th>Current Moisture Level</th>
+            <th>Next Check Time</th>
+            <th>Amount</th>
+            <th>Check Moisture Level</th>
+            <th>Water Plant</th>
+        </tr>
+        <tr>
+            <td id="moisture_level">{{ moisture_level }}</td>
+            <td id="next_check_time">{{ next_check_time }}</td>
+            <td id="amount">{{ amount }}</td>
+            <td id="check_moisture">{{ check_moisture }}</td>
+            <td id="water_plant">{{ water_plant }}</td>
+        </tr>
+    </table>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
