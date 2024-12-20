@@ -1,10 +1,8 @@
 import time
 import Adafruit_ADS1x15
 
-# Create an ADS1115 ADC (16-bit) instance
 adc = Adafruit_ADS1x15.ADS1115(busnum=1)
 
-# Gain setting (use gain=1 for most applications)
 GAIN = 2/3
 
 # Function to read moisture level
